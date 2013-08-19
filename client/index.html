@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lewis Prototype</title>
+    <!-- Latest compiled and minified bootstrap CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css">
+</head>
+<body>
+  <script type="text/x-handlebars" data-template-name="main">
+  
+  <!-- Header -->
+<div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+    <span class="icon-list"></span>
+  </button>
+  <a class="navbar-brand" href="#">Lewis Prototype</a>
+  <div class="nav-collapse collapse navbar-responsive-collapse">
+    <ul class="nav navbar-nav pull-right">
+      
+      <li class="dropdown">
+        <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+          <strong>Admin</strong> <span class="caret"></span></a>
+        <ul id="g-account-menu" class="dropdown-menu" role="menu">
+          <li><a href="#">My Profile</a></li>
+        </ul>
+      </li>
+      
+      <li><a href="#">Log out</a></li>
+    </ul>
+  </div>
+</div>
+<!-- /Header -->
+
+<!-- Main -->
+<div class="container">
+<div class="row">
+  <div class="col col-lg-3">
+      <!-- Left -->
+      <ul class="nav nav-pills nav-stacked">
+        <li class="nav-header"></li>
+        <li class="active"><a href="http://bootply.com" title="The Bootstrap Playground" target="ext">Find Restaurant</a></li>
+        <li><a href="/tagged/bootstrap-3">Add Restaurant</a></li>
+      </ul>
+    </div><!-- /span-3 -->
+    <div class="col col-lg-9">
+        <!-- Right -->
+      <div class="navbar-inner clearfix">
+            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-dashboard icon-large"></span> My Dashboard</a>
+            <ul class="nav nav-pills pull-right">
+              <li class="active"><a title="Add Widget" data-toggle="modal" href="#addWidgetModal"><span class="glyphicon glyphicon-plus-sign icon-large"></span> Add Widget</a></li>
+            </ul>
+        </div>
+      
+        <hr>
+      
+    <div class="row">
+
+
+        <div class="well span9">
+            <form id="form-inline">
+            <ul>                
+                <legend>Which restaurant are you looking for?</legend>
+                <li>
+                <label>Restaurant name</label>              
+                <input type="text" placeholder="Restaurant name" class="input-xlarge">
+                </li>
+                <li>
+                <label>Type</label>
+                <select name="Type" id="DropdownType" class="input-xlarge">
+                    <option value="">Afghan</option><option value="">African</option><option value="">American</option><option value="">Armenian</option><option value="">Asian</option><option value="">Bagels</option><option value="">Bakery</option><option value="">Barbecue</option><option value="">Bistro</option><option value="">Brazilian</option><option value="">Breakfast / Brunch</option><option value="">British</option><option value="">Buffet</option><option value="">Burgers</option><option value="">California</option><option value="">Canadian</option><option value="">Caribbean</option><option value="">Chicken</option><option value="">Chinese</option><option value="">Coffee & Tea</option><option value="">Cuban</option><option value="">Delicatessen</option><option value="">Desserts</option><option value="">Dim Sum</option><option value="">Diner</option><option value="">Donair</option><option value="">Donuts</option><option value="">Eastern European</option><option value="">Ethiopian</option><option value="">European</option><option value="">Family Fare</option><option value="">Fast Food</option><option value="">Filipino</option><option value="">Fish and Chips</option><option value="">French</option><option value="">Fusion</option><option value="">Gastropub</option><option value="">German</option><option value="">Greek</option><option value="">Hot Dogs & Sausage</option><option value="">Indian</option><option value="">International</option><option value="">Iranian</option><option value="">Italian</option><option value="">Japanese</option><option value="">Korean</option><option value="">Kosher</option><option value="">Latin American</option><option value="">Lebanese</option><option value="">Malaysian</option><option value="">Mediterranean</option><option value="">Mexican</option><option value="">Middle Eastern</option><option value="">Moroccan</option><option value="">Pakistani</option><option value="">Pizza</option><option value="">Portuguese</option><option value="">Pub Food</option><option value="">Salads</option><option value="">Sandwiches/Subs</option><option value="">Seafood</option><option value="">Smoothies</option><option value="">Soups</option><option value="">Southern & Soul</option><option value="">Southwestern</option><option value="">Spanish</option><option value="">Steakhouse</option><option value="">Sushi</option><option value="">Tacos</option><option value="">Tapas</option><option value="">Tex-Mex</option><option value="">Thai</option><option value="">Turkish</option><option value="">Vegetarian</option><option value="">Vietnamese</option><option value="">Wine Bar</option><option value="">Other</option>
+                </select>
+                </li>
+            </ul>          
+            </form>
+        </div>
+
+        <div class="well">Inbox Messages <span class="badge pull-right">3</span></div>
+              
+                <div class="panel">
+                    <div class="panel-heading">
+                      <i class="icon icon-chevron-up chevron"></i>
+                      <i class="icon icon-wrench pull-right"></i> Quick Start
+                  </div>
+                  <div class="panel-content">
+                    
+                      <div class="btn-group btn-group-justified">
+                        <a href="#" class="btn btn-primary col col-lg-3">
+                          <i class="icon-laptop icon-large"></i>
+                          <p>Service</p>
+                        </a>
+                        <a href="#" class="btn btn-primary col col-lg-3">
+                          <i class="icon-cloud icon-large"></i>
+                          <p>Cloud</p>
+                        </a>
+                        <a href="#" class="btn btn-primary col col-lg-3">
+                          <i class="icon-github icon-large"></i>
+                          <p>GitHub</p>
+                        </a>
+                        <a href="#" class="btn btn-primary col col-lg-3">
+                          <span class="glyphicon glyphicon-question-sign icon-large"></span>
+                          <p>Help</p>
+                        </a>
+                      </div>
+                  </div><!--/panel content-->
+              </div><!--/panel-->
+              
+              
+              <div class="panel">
+                  <div class="panel-heading">Report</div>
+                  <table class="table table-striped">
+                  <thead>
+                    <tr><th>Name</th><th>Description</th><th>Type</th></tr></thead>
+                  <tbody>
+
+                    {{#each controller}}                        
+                        <tr><td>{{name}}</td><td>{{description}}%</td><td>{{type}}</td></tr>
+                    {{/each}}
+                  </tbody>
+                  </table>
+              </div><!--/panel-->
+              
+              
+              <div class="panel">
+                  <div class="panel-heading">Charts</div>
+                <div class="panel-content"><img src="http://www.wired.com/playbook/wp-content/uploads/2012/08/data-tracking-run-chart.jpg" class="img-responsive"></div>
+              </div><!--/panel-->              
+
+      </div><!--/row-->
+    </div><!--/col-span-9-->
+</div>
+</div>
+<!-- /Main -->
+
+<footer>This Bootstrap 3 dashboard layout is compliments of Bootply.com | <a href="http://www.bootply.com/61526"><strong>Edit on Bootply</strong></a></footer>
+
+<div class="modal" id="addWidgetModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Add Widget</h4>
+      </div>
+      <div class="modal-body">
+        <p>Add a widget stuff here..</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn">Close</a>
+        <a href="#" class="btn btn-primary">Save changes</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dalog -->
+</div><!-- /.modal -->
+  </script>
+
+  <script src="js/lib/jquery-1.9.1.js"></script>
+  <script src="js/lib/handlebars-1.0.0.js"></script>
+  <script src="js/lib/ember-1.0.0-rc.7.js"></script>
+  <script src="js/lib/ember-data-latest.js"></script>
+
+  <script src="js/application.js"></script>
+  <script src="js/model/models.js"></script>
+  <script src="js/router.js"></script>  
+</body>
+</html>
