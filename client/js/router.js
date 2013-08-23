@@ -3,8 +3,7 @@ Lewis.Router.map(function () {
 });
 
 Lewis.MainRoute = Ember.Route.extend({
-
   model: function () {
-    return Lewis.Restaurant.find();
+    return null;//Lewis.Restaurant.find( { type: 'Greek' } );
   }
 });

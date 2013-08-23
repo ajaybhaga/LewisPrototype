@@ -3,6 +3,7 @@
 'use strict';
 
 var express = require('express')
+    , url = require('url')
 	, routes = require('./routes/routes')
 	, db = require('./lib/db');
 
@@ -15,7 +16,7 @@ app.set('version', 'v0.0.1');
 app.set('mongoDbUrl', 'mongodb://localhost:27017/');
 app.set('mongoDbName', 'lewis');
 
-
+app.use(express.bodyParser());
 app.use(express.methodOverride());
 
 // ## CORS middleware
@@ -46,6 +47,21 @@ app.use(errorHandler);
 // Routes
 app.get('/', routes.getIndex);
 
+app.get('/api/restaurantsByName', function(req, res) {    
+    console.log('Received /api/restaurantsByName request...');
+    
+    // Retrieve url query
+    var url_parts = url.parse(req.url, true);
+    console.log(url_parts.query);
+
+    if (!url_parts.query.name) {
+        res.statusCode = 400;
+        return res.send('Error 400: Get syntax incorrect.');
+    }
+
+    db.findRestaurantsByName(url_parts.query.name, req, res);
+});
+
 // Retrieve API version
 app.get('/api', function(req, res)
 {
@@ -54,9 +70,8 @@ app.get('/api', function(req, res)
     });
 });
 
-// list API paths
+// List API paths
 app.get('/api/restaurants', db.findRestaurants);
-
 
 // Connect to database
 console.log('Connecting to db...');

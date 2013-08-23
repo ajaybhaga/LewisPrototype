@@ -121,6 +121,15 @@ module.exports = {
 
   },
 
+  findRestaurantsByName: function(name, req, res) {
+
+    RestaurantModel.find({ name: name }, function(err, data) {
+          if (err) return onError(res, err);        
+          onSuccess(res, { 'restaurants': data });
+    });
+
+  },
+
   findRestaurantByType: function(type, callback) {
     RestaurantModel.find({ type: type }, function(err, data) {
       if (err) {
