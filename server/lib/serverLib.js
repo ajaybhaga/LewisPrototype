@@ -6,7 +6,8 @@ var cookie = require('cookie')
   , express = require('express')
   , http = require('http')
   , MemoryStore = express.session.MemoryStore
-  , ObjectID = require('mongodb').ObjectID;
+  , ObjectID = require('mongodb').ObjectID
+  , JSON2 = require('JSON2');
 
 var sessionStore = new MemoryStore();
 var io;

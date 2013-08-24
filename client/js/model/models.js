@@ -1,6 +1,6 @@
-// Lewis Data Models
+// Data Models
 
-Lewis.Contact = DS.Model.extend({
+App.Contact = DS.Model.extend({
 	name: DS.attr('string')
   , phone1: DS.attr('string')
   , phone2: DS.attr('string')
@@ -12,44 +12,44 @@ Lewis.Contact = DS.Model.extend({
   , lastUpdateDate : DS.attr('date')
 });
 
-Lewis.Source = DS.Model.extend({
+App.Source = DS.Model.extend({
 	name: DS.attr('string')
   , description: DS.attr('string')
   , type: DS.attr('string')
   , typeDescription: DS.attr('string')
-  , contacts: DS.attr('Lewis.Contact') 
+  , contacts: DS.attr('App.Contact') 
 });
 
-Lewis.Ingredient = DS.Model.extend({
+App.Ingredient = DS.Model.extend({
 	name: DS.attr('string')
-  , sourceId: DS.belongsTo('Lewis.Source')	
+  , sourceId: DS.belongsTo('App.Source')	
 });
 
-Lewis.Alternative = DS.Model.extend({
+App.Alternative = DS.Model.extend({
 	name: DS.attr('string')
   , description: DS.attr('string')
-  , ingredients: DS.hasMany('Lewis.Ingredient')
+  , ingredients: DS.hasMany('App.Ingredient')
 });
 
 
-Lewis.MenuItem = DS.Model.extend({
+App.MenuItem = DS.Model.extend({
 	food: DS.attr('string')
   , description: DS.attr('string')
-  , ingredients: DS.hasMany('Lewis.Ingredient')
-  , alternatives: DS.hasMany('Lewis.Alternative')
+  , ingredients: DS.hasMany('App.Ingredient')
+  , alternatives: DS.hasMany('App.Alternative')
 });
 
-Lewis.Menu = DS.Model.extend({
+App.Menu = DS.Model.extend({
 	name: DS.attr('string')
   , courseType: DS.attr('string')
-  , menuItems: DS.hasMany('Lewis.MenuItem')
+  , menuItems: DS.hasMany('App.MenuItem')
 });
 
-Lewis.Feature = DS.Model.extend({
+App.Feature = DS.Model.extend({
 	name: DS.attr('string')
 });
 
-Lewis.Loc = DS.Model.extend({
+App.Loc = DS.Model.extend({
 	name: DS.attr('string')
   ,	address: DS.attr('string')
   , city: DS.attr('string')
@@ -57,15 +57,15 @@ Lewis.Loc = DS.Model.extend({
   , postalCode: DS.attr('string')
   , neighbourhood: DS.attr('string')
   , region: DS.attr('string')
-  , features: DS.hasMany('Lewis.Feature')
-  , menus: DS.hasMany('Lewis.Menu')
-  , contacts: DS.hasMany('Lewis.Contact') 
+  , features: DS.hasMany('App.Feature')
+  , menus: DS.hasMany('App.Menu')
+  , contacts: DS.hasMany('App.Contact') 
 });
 
-Lewis.Restaurant = DS.Model.extend({
+App.Restaurant = DS.Model.extend({
 	name: DS.attr('string')
   , description: DS.attr('string')
   , type: DS.attr('string')
-  , locations: DS.hasMany('Lewis.Loc')
-  , menus: DS.hasMany('Lewis.Menu')
+  , locations: DS.hasMany('App.Loc')
+  , menus: DS.hasMany('App.Menu')
 });

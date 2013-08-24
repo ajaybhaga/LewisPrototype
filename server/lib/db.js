@@ -1,7 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var url = require('url');
 
 var db = mongoose.connection;
+
+
+var JSON2 = require('JSON2');
 
 var restaurantSchema = new Schema({
     name: String
@@ -114,7 +118,19 @@ module.exports = {
 
   findRestaurants: function(req, res) {
 
-    RestaurantModel.find({}, function(err, data) {
+    console.log('Received /api/findRestaurants request...');
+    
+    // Retrieve url query
+    var url_parts = url.parse(req.url, true);
+    console.log(url_parts.query);
+
+    if (!url_parts.query.name) {
+        res.statusCode = 400;
+        return res.send('Error 400: Get syntax incorrect.');
+    }
+
+    console.log("findRestaurants: url_parts.query.name = " + url_parts.query.name);
+    RestaurantModel.find({ name : url_parts.query.name }, function(err, data) {
           if (err) return onError(res, err);        
           onSuccess(res, { 'restaurants': data });
     });

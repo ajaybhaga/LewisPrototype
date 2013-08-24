@@ -1,8 +1,10 @@
 // Lewis (client)
 
-window.Lewis = Ember.Application.create();
+window.App = Ember.Application.create({
+    LOG_TRANSITIONS: true
+});
 
-Lewis.RESTAdapter = DS.RESTAdapter.extend({
+App.RESTAdapter = DS.RESTAdapter.extend({
 
     url: 'http://localhost:3000',
 
@@ -58,7 +60,7 @@ Lewis.RESTAdapter = DS.RESTAdapter.extend({
     })
 });
 
-Lewis.Store = DS.Store.extend({
+App.Store = DS.Store.extend({
     revision: 13,
-    adapter: Lewis.RESTAdapter
+    adapter: App.RESTAdapter
 });
