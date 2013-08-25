@@ -1,9 +1,8 @@
 App.Router.map(function () {  
-  this.resource('search', { path: '/search/:name' });
-  this.resource('start', { path: '/' });
+  this.resource('main', { path: '/' });
 });
 
-App.StartRoute = Ember.Route.extend({
+App.MainRoute = Ember.Route.extend({
   model: function () {
     return App.Restaurant.find( { name: 'x' } );
   },
@@ -13,26 +12,10 @@ App.StartRoute = Ember.Route.extend({
   }
 });
 
-App.SearchRoute = Ember.Route.extend({
-  model: function (params) {
-  	alert(params.name);
-    return App.Restaurant.find( { name: params.name } );
-  },
+App.MainController = Ember.ArrayController.extend({
 
-  setupController: function(controller, model) {
-    controller.set('model', model);
-  }
-});
-
-App.SearchController = Ember.ArrayController.extend({
-	soundVolume: 1,
-	myText: 'My value',
-
-	turnItUp: function(level){
-    	//Do your thing
-    	alert("Whoa!");
-    	myText = 'New value';
-
+ 	search: function(name, foodTypes) {
+ 		this.set('model', App.Restaurant.find( { name: name, type: foodTypes } ));
  	}
 });
 
@@ -40,4 +23,17 @@ App.ClickableView = Ember.View.extend({
   click: function(evt) {
     this.get('controller').send('turnItUp', 11);
   }
+});
+
+
+App.MainView = Ember.View.extend({
+  templateName: 'main',
+
+  firstName: "Albert",
+  lastName: "Hofmann"
+});
+
+App.ResultsView = Ember.View.extend({
+  posts: 25,
+  hobbies: "Riding bicycles"
 });

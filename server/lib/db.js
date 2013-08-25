@@ -124,16 +124,30 @@ module.exports = {
     var url_parts = url.parse(req.url, true);
     console.log(url_parts.query);
 
+/*
     if (!url_parts.query.name) {
         res.statusCode = 400;
         return res.send('Error 400: Get syntax incorrect.');
     }
+*/
 
     console.log("findRestaurants: url_parts.query.name = " + url_parts.query.name);
-    RestaurantModel.find({ name : url_parts.query.name }, function(err, data) {
+    console.log("findRestaurants: url_parts.query.type = " + url_parts.query.type);
+
+    if (url_parts.query.name) {
+    RestaurantModel.find({ name : url_parts.query.name, type: url_parts.query.type }, function(err, data) {
           if (err) return onError(res, err);        
           onSuccess(res, { 'restaurants': data });
     });
+    }
+
+
+    if (!url_parts.query.name) {
+    RestaurantModel.find({ type: url_parts.query.type }, function(err, data) {
+          if (err) return onError(res, err);        
+          onSuccess(res, { 'restaurants': data });
+    });
+    }
 
   },
 

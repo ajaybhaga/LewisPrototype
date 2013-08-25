@@ -69,3 +69,5 @@ App.Restaurant = DS.Model.extend({
   , locations: DS.hasMany('App.Loc')
   , menus: DS.hasMany('App.Menu')
 });
+
+App.FoodTypes = ["Afghan","African","American","Armenian","Asian","Bagels","Bakery","Barbecue","Bistro","Brazilian","Breakfast / Brunch","British","Buffet","Burgers","California","Canadian","Caribbean","Chicken","Chinese","Coffee & Tea","Cuban","Delicatessen","Desserts","Dim Sum","Diner","Donair","Donuts","Eastern European","Ethiopian","European","Family Fare","Fast Food","Filipino","Fish and Chips","French","Fusion","Gastropub","German","Greek","Hot Dogs & Sausage","Indian","International","Iranian","Italian","Japanese","Korean","Kosher","Latin American","Lebanese","Malaysian","Mediterranean","Mexican","Middle Eastern","Moroccan","Pakistani","Pizza","Portuguese","Pub Food","Salads","Sandwiches/Subs","Seafood","Smoothies","Soups","Southern & Soul","Southwestern","Spanish","Steakhouse","Sushi","Tacos","Tapas","Tex-Mex","Thai","Turkish","Vegetarian","Vietnamese","Wine Bar","Other"];
