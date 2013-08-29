@@ -4,58 +4,95 @@
   <meta charset="utf-8">
   <title>Lewis Prototype</title>
     <!-- Latest compiled and minified bootstrap CSS -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-wip/css/bootstrap.min.css"> -->
 
-    <script src="js/lib/jquery-1.9.1.js"></script>
-    <script src="js/lib/handlebars-1.0.0.js"></script>
-    <script src="js/lib/ember-1.0.0-rc.7.js"></script>
-    <script src="js/lib/ember-data-latest.js"></script>
-    <script src="js/lib/crossdomain-ajax.js"></script>
 
-    <script src="js/application.js"></script>
-    <script src="js/model/models.js"></script>
-    <script src="js/router.js"></script>  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Loading Bootstrap -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Loading Flat UI -->
+    <link href="css/flat-ui.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="images/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+    <![endif]-->
+
 </head>
 <body>
 
-  <script type="text/x-handlebars" data-template-name="main">
-  
-    <!-- Header -->
-    <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-        <span class="icon-list"></span>
-      </button>
-      <a class="navbar-brand" href="#">Lewis Prototype</a>
-      <div class="nav-collapse collapse navbar-responsive-collapse">
-        <ul class="nav navbar-nav pull-right">
-          
-          <li class="dropdown">
-            <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-              <strong>Admin</strong> <span class="caret"></span></a>
-            <ul id="g-account-menu" class="dropdown-menu" role="menu">
-              <li><a href="#">My Profile</a></li>
-            </ul>
-          </li>
-          
-          <li><a href="#">Log out</a></li>
-        </ul>
+
+
+    <script type="text/x-handlebars" data-template-name="main">
+      <div class="container">
+
+      <h1>Lewis Prototype</h1>      
+
+      <div class="row demo-row">
+        <div class="span3">
+          <a href="#fakelink" class="btn btn-large btn-block btn-primary">Find Restaurant</a>
+        </div>
+        <div class="span3">
+          <a href="#fakelink" class="btn btn-large btn-block btn-primary">Add Restaurant</a>
+        </div>
+      </div> <!-- /row -->
+
+      <h3 class="demo-panel-title">Which restaurant are you looking for?</h3>
+
+      <div class="row demo-row">
+
+      
+      <div class="row">
+        <div class="span3">
+          <!--<input type="text" value="" placeholder="Restaurant Name" class="span3" />-->
+          {{view Ember.TextField valueBinding="name"}}
+        </div>
+      </div>                
+
+      <div class="row">
+        <div class="span3">
+        {{view Ember.Select contentBinding="App.FoodTypes" valueBinding="App.FoodTypes.selected"}}
+        </div>
       </div>
-    </div>
-    <!-- /Header -->
+      
 
-    <!-- Main -->
-    <div class="container">
-    <div class="row">
-      <div class="col col-lg-3">
-          <!-- Left -->
-          <ul class="nav nav-pills nav-stacked">
-            <li class="nav-header"></li>
-            <li class="active"><a href="http://bootply.com" title="The Bootstrap Playground" target="ext">Find Restaurant</a></li>
-            <li><a href="/tagged/bootstrap-3">Add Restaurant</a></li>
-          </ul>
-        </div><!-- /span-3 -->
+      <div class="row">
+        <div class="span3">
+          <button {{action "search" name App.FoodTypes.selected}}  class="btn btn-large btn-block btn-primary">Search</button>
+        </div>
+      </div>
 
-        <div class="col col-lg-9">
+<br>
+      <div class="row">
+
+          <div class="todo mrm" id="resultsPanel" style="display: none">
+            <ul>
+              {{#each controller}}
+              <li>              
+                <div class="todo-icon fui-radio-unchecked"></div>
+                <div class="todo-content">
+                  <h4 class="todo-name">
+                    <strong>{{name}}</strong> ({{type}})
+                  </h4>
+                  {{description}}
+                </div>
+              </li>
+              {{/each}}
+
+            </ul>
+        </div> <!-- /todo list -->
+        </div>
+
+
+    </div> <!-- /container -->
+  </script>
+
+ <script type="text/x-handlebars" data-template-name="addRestaurant">
+  
             <!-- Right -->
           
           
@@ -65,7 +102,7 @@
             <div class="well span9">
                 <form id="target-form">
                   <ul>                
-                      <legend>Which restaurant are you looking for?</legend>
+                      <legend>This is the restaurant</legend>
                       <li>
                       <label>Restaurant name</label>              
                       <!--<input type="text" id="name" name="name" placeholder="Restaurant name" class="input-xlarge">-->
@@ -83,27 +120,10 @@
             </div>
                 <div id="response-get">
                 </div>              
-                  <div class="panel">
-                      <div class="panel-heading">Results</div>
-
-                          {{#view App.ResultsView}}
-                            <table class="table table-striped">
-                            <thead>
-                              <tr><th>Name</th><th>Description</th><th>Type</th></tr></thead>
-                            <tbody>
-
-                              {{#each controller}}                        
-                                  <tr><td>{{name}}</td><td>{{description}}%</td><td>{{type}}</td></tr>
-                              {{/each}}
-                            </tbody>
-                            </table>
-                          {{/view}}
+                  <div class="panel" id="resultsPanel" style="display: none">
 
                   </div><!--/panel-->                          
           </div><!--/row-->
-        </div><!--/col-span-9-->
-    </div>
-    </div>
     <!-- /Main -->
 
     <div class="modal" id="addWidgetModal">
@@ -171,6 +191,32 @@ $(document).on('submit', function() {
     return false; // avoid to execute the actual submit of the form.
 });
   </script>
+
+
+<!--    <script src="js/lib/jquery-1.9.1.js"></script>-->
+
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="js/jquery.ui.touch-punch.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-select.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
+    <script src="js/flatui-checkbox.js"></script>
+    <script src="js/flatui-radio.js"></script>
+    <script src="js/jquery.tagsinput.js"></script>
+    <script src="js/jquery.placeholder.js"></script>
+    <script src="js/jquery.stacktable.js"></script>
+    <script src="js/application.js"></script>
+
+    <script src="js/lib/handlebars-1.0.0.js"></script>
+    <script src="js/lib/ember-1.0.0-rc.7.js"></script>
+    <script src="js/lib/ember-data-latest.js"></script>
+    <script src="js/lib/crossdomain-ajax.js"></script>
+
+    <script src="js/lib/application.js"></script>
+    <script src="js/lib/model/models.js"></script>
+    <script src="js/lib/router.js"></script>  
+
 
 
 

@@ -134,7 +134,7 @@ module.exports = {
     console.log("findRestaurants: url_parts.query.name = " + url_parts.query.name);
     console.log("findRestaurants: url_parts.query.type = " + url_parts.query.type);
 
-    if (url_parts.query.name) {
+    if ((url_parts.query.name) && (url_parts.query.type)) {
     RestaurantModel.find({ name : url_parts.query.name, type: url_parts.query.type }, function(err, data) {
           if (err) return onError(res, err);        
           onSuccess(res, { 'restaurants': data });
@@ -142,12 +142,28 @@ module.exports = {
     }
 
 
-    if (!url_parts.query.name) {
+    if ((!url_parts.query.name) && (url_parts.query.type)) {
     RestaurantModel.find({ type: url_parts.query.type }, function(err, data) {
           if (err) return onError(res, err);        
           onSuccess(res, { 'restaurants': data });
     });
     }
+
+    if ((url_parts.query.name) && (!url_parts.query.type)) {
+    RestaurantModel.find({ name: url_parts.query.name }, function(err, data) {
+          if (err) return onError(res, err);        
+          onSuccess(res, { 'restaurants': data });
+    });
+    }
+
+    if ((!url_parts.query.name) && (!url_parts.query.type)) {
+    RestaurantModel.find({ name: 'none' }, function(err, data) {
+          if (err) return onError(res, err);        
+          onSuccess(res, { 'restaurants': data });
+    });
+    }
+
+
 
   },
 
