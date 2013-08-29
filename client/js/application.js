@@ -1,66 +1,68 @@
-// Lewis (client)
+// Some general UI pack related JS
+// Extend JS String with repeat method
+String.prototype.repeat = function(num) {
+    return new Array(num + 1).join(this);
+};
 
-window.App = Ember.Application.create({
-    LOG_TRANSITIONS: true
-});
+(function($) {
 
-App.RESTAdapter = DS.RESTAdapter.extend({
+  // Add segments to a slider
+  $.fn.addSliderSegments = function (amount) {
+    return this.each(function () {
+      var segmentGap = 100 / (amount - 1) + "%"
+        , segment = "<div class='ui-slider-segment' style='margin-left: " + segmentGap + ";'></div>";
+      $(this).prepend(segment.repeat(amount - 2));
+    });
+  };
 
-    url: 'http://localhost:3000',
+  $(function() {
+  
+    // Todo list
+    $(".todo li").click(function() {
+        $(this).toggleClass("todo-done");
+    });
 
-    namespace: 'api',
+    // Custom Select
+    $("select[name='herolist']").selectpicker({style: 'btn-primary', menuStyle: 'dropdown-inverse'});
 
-    serializer: DS.RESTSerializer.extend({
+    // Tooltips
+    $("[data-toggle=tooltip]").tooltip("show");
 
-        init: function()
-        {
-            this._super();
+    // Tags Input
+    $(".tagsinput").tagsInput();
 
-            this.configure('plurals', {
-            	restaurant: 'restaurants',
-                list: 'lists',
-                task: 'tasks'
-            });
-        },
+    // jQuery UI Sliders
+    var $slider = $("#slider");
+    if ($slider.length) {
+      $slider.slider({
+        min: 1,
+        max: 5,
+        value: 2,
+        orientation: "horizontal",
+        range: "min"
+      }).addSliderSegments($slider.slider("option").max);
+    }
 
-        primaryKey: function(type) {
-            return '_id';
-        },
+    // Placeholders for input/textarea
+    $("input, textarea").placeholder();
 
-        // the default Ember Serializer converts IDs to numbers meaning all-numeric
-        // MongoDB IDs are serialized in the URL like `5.1755256517945e`
+    // Make pagination demo work
+    $(".pagination a").on('click', function() {
+      $(this).parent().siblings("li").removeClass("active").end().addClass("active");
+    });
 
-        // https://github.com/emberjs/data/blob/master/packages/ember-data/lib/system/serializer.js
-        // serializeId: function(id) {
-        //     if (isNaN(id)) { return id; }
-        //     return +id;
-        // }
-        serializeId: function(id) {
-            return id.toString();
-        },
+    $(".btn-group a").on('click', function() {
+      $(this).siblings().removeClass("active").end().addClass("active");
+    });
 
-        // Ember Data only serializes hasMany relationships if they're embedded records
-        //
-        // Macaque.RESTAdapter.map('Macaque.Task', {
-        //     'lists': { embedded: 'always' }
-        // });
-        //
-        // Serialize hasMany IDs to mimic sideloaded relationships
-        //
-        addHasMany: function(hash, record, key, relationship)
-        {
-            if (/_ids$/.test(key)) {
-                hash[key] = [];
-                record.get(this.pluralize(key.replace(/_ids$/, ''))).forEach(function(item) {
-                    hash[key].push(item.get('id'));
-                });
-            }
-            return hash;
-        }
-    })
-});
+    // Disable link clicks to prevent page scrolling
+    $('a[href="#fakelink"]').on('click', function (e) {
+      e.preventDefault();
+    });
 
-App.Store = DS.Store.extend({
-    revision: 13,
-    adapter: App.RESTAdapter
-});
+    // Switch
+    $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
+    
+  });
+  
+})(jQuery);
