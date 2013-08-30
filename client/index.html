@@ -24,41 +24,32 @@
 
 </head>
 <body>
+      
 
-
-
-    <script type="text/x-handlebars" data-template-name="main">
+    <script type="text/x-handlebars" data-template-name="restaurants/index">
       <div class="container">
 
       <h1>Lewis Prototype</h1>      
 
-      <div class="row demo-row">
-        <div class="span3">
-          <a href="#fakelink" class="btn btn-large btn-block btn-primary">Find Restaurant</a>
-        </div>
-        <div class="span3">
-          <a href="#fakelink" class="btn btn-large btn-block btn-primary">Add Restaurant</a>
-        </div>
-      </div> <!-- /row -->
-
-      <h3 class="demo-panel-title">Which restaurant are you looking for?</h3>
-
-      <div class="row demo-row">
-
-      
       <div class="row">
         <div class="span3">
-          <!--<input type="text" value="" placeholder="Restaurant Name" class="span3" />-->
-          {{view Ember.TextField valueBinding="name"}}
+          {{#linkTo 'restaurants'}}<button class="btn btn-large btn-block btn-primary">Find Restaurant</button>{{/linkTo}}
         </div>
-      </div>                
-
-      <div class="row">
         <div class="span3">
-        {{view Ember.Select contentBinding="App.FoodTypes" valueBinding="App.FoodTypes.selected"}}
+          {{#linkTo 'restaurants.new'}}<button class="btn btn-large btn-block btn-primary">New Restaurant</button>{{/linkTo}}
         </div>
       </div>
+
+      <h3 class="panel-title">Which restaurant are you looking for?</h3>
+
+      <div class="row">
+
       
+      <div class="row">
+        <div class="span3">
+          {{partial "get_fields"}}
+        </div>
+      </div>                
 
       <div class="row">
         <div class="span3">
@@ -66,7 +57,7 @@
         </div>
       </div>
 
-<br>
+      <br />
       <div class="row">
 
           <div class="todo mrm" id="resultsPanel" style="display: none">
@@ -84,117 +75,90 @@
               {{/each}}
 
             </ul>
-        </div> <!-- /todo list -->
+          </div>
         </div>
 
 
     </div> <!-- /container -->
   </script>
 
- <script type="text/x-handlebars" data-template-name="addRestaurant">
-  
-            <!-- Right -->
-          
-          
-        <div class="row">
+ <script type="text/x-handlebars" data-template-name="restaurants/new">
+            
+     <div class="container">
 
+      <h1>Lewis Prototype</h1>      
 
-            <div class="well span9">
-                <form id="target-form">
-                  <ul>                
-                      <legend>This is the restaurant</legend>
-                      <li>
-                      <label>Restaurant name</label>              
-                      <!--<input type="text" id="name" name="name" placeholder="Restaurant name" class="input-xlarge">-->
-                      {{view Ember.TextField valueBinding="name"}}
-                      </li>
-                      <li>
-                      <label>Food Type</label>
-                      {{view Ember.Select contentBinding="App.FoodTypes" valueBinding="App.FoodTypes.selected"}}
-                      </li>
-                  </ul>          
-                  <button {{action "search" name App.FoodTypes.selected}}>Search</button>
+      <div class="row">
+        <div class="span3">
+          {{partial "nav_buttons"}}
+        </div>
+      </div>
 
+      <h3 class="panel-title">New Restaurant Details</h3>
 
-                </form>
-            </div>
-                <div id="response-get">
-                </div>              
-                  <div class="panel" id="resultsPanel" style="display: none">
+      <div class="row">
 
-                  </div><!--/panel-->                          
-          </div><!--/row-->
-    <!-- /Main -->
+      
+      <form {{action save on="submit"}}>   
+      <div class="row">
+        <div class="span9">                    
+            {{partial "post_fields"}}
+            <button type="submit" class="btn btn-large btn-block btn-primary">Save</button>          
+        </div>
+      </div>
 
-    <div class="modal" id="addWidgetModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title">Add Widget</h4>
-          </div>
-          <div class="modal-body">
-            <p>Add a widget stuff here..</p>
-          </div>
-          <div class="modal-footer">
-            <a href="#" class="btn">Close</a>
-            <a href="#" class="btn btn-primary">Save changes</a>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dalog -->
-    </div><!-- /.modal -->
+      </form>
+    </div>
 
-  </script><!-- end of handlebars -->
+  </script>
 
-  <script>
-      // this is the id of the submit button
-      //$('#target-form')
-$(document).on('submit', function() {
-    
-    var url = "localhost:3000"; // the script where you handle the form input.
+  <script type="text/x-handlebars" data-template-name="restaurant">
+            
+     <div class="container">
 
-      // doing post request
-/*      crossdomain.ajax({
-        type: "POST",
-        url: "http://thebuzzengine.appspot.com/api/hello/",
-        data: "hello=world",
-        success: function (txt) {
-          $('#response-post').html(txt);
-        }
-      });
-*/
-      var name = $('#name').val();
-  /*
-      // doing get request
-      crossdomain.ajax({
-          type: "GET",
-          url: "http://localhost:3000/api/restaurants/?name=" + name,
-          success: function (txt) {
-            $('#response-get').html(txt);            
-          },
-          error: function(txt) {
-            alert(txt);
-          }
-      });
-*/
-/*
-    $.ajax({
-           type: "GET",
-           url: url,
-           data: $("#target-form").serialize(), // serializes the form's elements.
-           success: function(data)
-           {
-               alert(data); // show response from the php script.
-           }
-         });*/
+      <h1>Lewis Prototype</h1>      
 
-    return false; // avoid to execute the actual submit of the form.
-});
+      <div class="row">
+        <div class="span3">
+          {{partial "nav_buttons"}}
+        </div>
+      </div>
+
+      <h3 class="panel-title">Edit Restaurant Details</h3>
+
+      <div class="row demo-row">
+      
+      <form {{action save on="submit"}}>   
+      <div class="row">
+        <div class="span9">                    
+            {{partial "post_fields"}}
+            <button type="submit" class="btn btn-large btn-block btn-primary">Update</button>          
+        </div>
+      </div>
+
+      </form>
+    </div>
+
   </script>
 
 
-<!--    <script src="js/lib/jquery-1.9.1.js"></script>-->
+  <script type="text/x-handlebars" data-template-name="_nav_buttons">
+   {{#linkTo 'restaurants'}}<button class="btn btn-large btn-block btn-primary">Find Restaurant</button>{{/linkTo}}<br />
+   {{#linkTo 'restaurants.new'}}<button class="btn btn-large btn-block btn-primary">New Restaurant</button>{{/linkTo}}<br />
+  </script>
 
+  <script type="text/x-handlebars" data-template-name="_get_fields">
+    {{view Ember.TextField valueBinding="name" id="name" placeholder="Restaurant name"}}<br />
+    {{view Ember.Select contentBinding="App.FoodTypes" valueBinding="App.FoodTypes.selected" id="type"}}<br />
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="_post_fields">
+    {{view Ember.TextField valueBinding="name" id="name" placeholder="Restaurant name" required="true"}}<br />
+    {{view Ember.TextArea valueBinding="description" id="description" placeholder="Restaurant description"}}<br />
+    {{view Ember.Select contentBinding="App.FoodTypes" valueBinding="type" id="type" required="true"}}<br />
+  </script>
+
+<!--    <script src="js/lib/jquery-1.9.1.js"></script>-->
     <script src="js/jquery-1.8.3.min.js"></script>
     <script src="js/jquery-ui-1.10.3.custom.min.js"></script>
     <script src="js/jquery.ui.touch-punch.min.js"></script>
@@ -216,9 +180,6 @@ $(document).on('submit', function() {
     <script src="js/lib/application.js"></script>
     <script src="js/lib/model/models.js"></script>
     <script src="js/lib/router.js"></script>  
-
-
-
 
 </body>
 </html>

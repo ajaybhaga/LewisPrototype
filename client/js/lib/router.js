@@ -1,15 +1,18 @@
-App.Router.map(function () {  
-  this.resource('main', { path: '/' });
-
-  this.resource('restaurant', { path: '/restaurant/:restaurant_id' }, function() {
-    this.route('edit');
-  }); 
-
-  this.route('addRestaurant', { path: '/restaurant/add' });
+App.Router.map(function () {
+  this.resource('restaurants', function() {
+    this.route('new', { path: "/new" });
+    this.resource('restaurant', {path: ':restaurant_id'});
+  });
 
 });
 
-App.MainRoute = Ember.Route.extend({
+App.IndexRoute = Ember.Route.extend({
+  redirect: function() {
+    this.transitionTo('restaurants.index');
+  }
+});
+
+App.RestaurantsIndexRoute = Ember.Route.extend({
   model: function () {
     return App.Restaurant.find( { name: 'x' } );
   },
@@ -19,7 +22,7 @@ App.MainRoute = Ember.Route.extend({
   }
 });
 
-App.MainController = Ember.ArrayController.extend({
+App.RestaurantsIndexController = Ember.ArrayController.extend({
 
  	search: function(name, foodTypes) { 		
  		if (!$('#resultsPanel').is(":visible")) {
@@ -29,42 +32,19 @@ App.MainController = Ember.ArrayController.extend({
  	}
 });
 
-App.RestaurantNewRoute = Ember.Route.extend({
-  model: function () {
-    return App.Restaurant.find( { name: 'x' } );
+App.RestaurantsNewRoute = Ember.Route.extend({
+  setupController: function(controller) {
+    controller.newRecord();
+  }
+});
+
+App.RestaurantsNewController = Ember.ObjectController.extend({
+  newRecord: function() {
+    this.set('content', App.Restaurant.createRecord({name: "New Restaurant"}));
   },
 
-  setupController: function(controller, model) {
-    controller.set('model', model);
+  save: function() {
+      this.get('store').commit();
+      this.get('target.router').transitionTo('restaurants.index');
   }
-});
-
-App.RestaurantNewController = Ember.ArrayController.extend({
-
- 	search: function(name, foodTypes) { 		
- 		if (!$('#resultsPanel').is(":visible")) {
- 			$('#resultsPanel').fadeIn();
- 		}
- 		this.set('model', App.Restaurant.find( { name: name, type: foodTypes } ));
- 	}
-});
-
-
-App.ClickableView = Ember.View.extend({
-  click: function(evt) {
-    this.get('controller').send('turnItUp', 11);
-  }
-});
-
-
-App.MainView = Ember.View.extend({
-  templateName: 'main',
-
-  firstName: "Albert",
-  lastName: "Hofmann"
-});
-
-App.ResultsView = Ember.View.extend({
-  posts: 25,
-  hobbies: "Riding bicycles"
 });

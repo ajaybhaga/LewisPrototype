@@ -57,6 +57,12 @@ app.get('/api', function(req, res)
 // List API paths
 app.get('/api/restaurants', db.findRestaurants);
 
+
+app.post('/api/restaurants', function(req, res)
+{
+    db.createRestaurant(req.body.restaurant.name, req.body.restaurant.description, req.body.restaurant.type);
+});
+
 // Connect to database
 console.log('Connecting to db...');
 db.connect(app.get('mongoDbUrl'), app.get('mongoDbName'));
